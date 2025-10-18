@@ -14,7 +14,13 @@ export class AuthRespository implements AuthInterfaceRespository {
   ) {}
 
   async findByEmail(email: string): Promise<Auth | null> {
-    const user = await this.authRepository.findOne({ where: { email } });
+    console.log('Finding user by email:', email);
+
+    const user = await this.authRepository.findOne({
+      where: { email: email },
+    });
+
+    console.log('xxxx', user);
 
     if (!user) {
       return null;

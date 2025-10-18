@@ -1,6 +1,6 @@
 import { ERole } from 'src/utils/enums/ERole';
-import { EntityValidationError } from '../../@shared/validators/validation.error';
-import { AuthValidatorFactory } from '../validators/auth.validator';
+import { EntityValidationError } from '../../@shared/validator/validation.error';
+import { AuthValidatorFactory } from '../validator/auth.validator';
 
 export interface AuthProps {
   _id?: string;
@@ -36,19 +36,6 @@ export class Auth {
         validator.errors ?? { invalid: ['Invalid entity'] },
       );
     }
-  }
-
-  changePassword(newPassword: string) {
-    this._password = newPassword;
-    Auth.validade(this);
-  }
-
-  changeRole(role: ERole) {
-    this._role = role;
-  }
-
-  changeName(name: string) {
-    this._name = name;
   }
 
   activate() {

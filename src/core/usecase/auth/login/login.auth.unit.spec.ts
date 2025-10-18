@@ -1,8 +1,8 @@
+import { outputLoginAuthDTO } from './login.auth.dto';
 import { LoginAuthUseCase } from './login.auth.usecase';
 
 describe('Login Auth Use Case', () => {
   it('should login user and return tokens', async () => {
-    // Mock AuthInterfaceRespository
     const mockAuthRepository = {
       findByEmail: jest.fn().mockResolvedValue({
         _id: 'user123',
@@ -11,12 +11,11 @@ describe('Login Auth Use Case', () => {
       }),
     };
 
-    // Mock IJwtInterface
     const mockJwtService = {
       sign: jest
         .fn()
-        .mockResolvedValueOnce('access_token_mock') // First call for access token
-        .mockResolvedValueOnce('refresh_token_mock'), // Second call for refresh token
+        .mockResolvedValueOnce('access_token_mock')
+        .mockResolvedValueOnce('refresh_token_mock'),
     };
 
     const loginUseCase = new LoginAuthUseCase(
@@ -29,7 +28,7 @@ describe('Login Auth Use Case', () => {
       password: 'securepassword',
     };
 
-    const result = await loginUseCase.execute(inputDTO);
+    const result: outputLoginAuthDTO = await loginUseCase.execute(inputDTO);
 
     expect(result).toEqual({
       token: 'access_token_mock',

@@ -1,9 +1,9 @@
 import { IsBoolean, IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { ERole } from 'src/utils/enums/ERole';
-import { ClassValidatorFields } from '../../@shared/validators/class-validator-fields';
+import { ClassValidatorFields } from '../../@shared/validator/class-validator-fields';
 import { Auth, AuthProps } from '../entity/auth.entity';
 
-class AuthRules {
+export class AuthRules {
   @IsString()
   @IsNotEmpty()
   name: string;

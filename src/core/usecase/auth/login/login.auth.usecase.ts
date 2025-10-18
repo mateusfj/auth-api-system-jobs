@@ -11,7 +11,13 @@ export class LoginAuthUseCase {
   async execute(
     inputLoginAuthDTO: inputLoginAuthDTO,
   ): Promise<outputLoginAuthDTO> {
+    console.log(
+      'LoginAuthUseCase.execute called with:',
+      inputLoginAuthDTO.email,
+    );
     const user = await this.authRepository.findByEmail(inputLoginAuthDTO.email);
+
+    console.log(user);
 
     if (!user) {
       throw new Error('User not found');

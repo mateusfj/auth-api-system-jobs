@@ -6,6 +6,8 @@ export class CreateAuthUseCase {
   constructor(private readonly authRepository: AuthInterfaceRespository) {}
 
   async execute(data: inputCreateAuthDTO): Promise<outputCreateAuthDTO> {
+    console.log('data', data);
+
     const userExists = await this.authRepository.findByEmail(data.email);
 
     if (userExists) {
