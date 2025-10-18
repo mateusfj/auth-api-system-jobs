@@ -4,9 +4,9 @@ import { FieldsErrors } from '../validators/validator-fields-interface';
 
 type Expect =
   | {
-    validator: ClassValidatorFields<any>;
-    data: any;
-  }
+      validator: ClassValidatorFields<any>;
+      data: any;
+    }
   | (() => any);
 
 expect.extend({
@@ -42,10 +42,10 @@ function assertContainsErrorMessages(
   return pass === undefined
     ? isValid()
     : {
-      pass: false,
-      message: () =>
-        `The received error message: ${JSON.stringify(received)}. Current : ${JSON.stringify(expected)}`,
-    };
+        pass: false,
+        message: () =>
+          `The received error message: ${JSON.stringify(received)}. Current : ${JSON.stringify(expected)}`,
+      };
 }
 
 function isValid() {

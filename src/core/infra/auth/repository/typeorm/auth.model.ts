@@ -1,5 +1,5 @@
-import { ERole } from "src/utils/enums/ERole";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { ERole } from 'src/utils/enums/ERole';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class AuthModel {
@@ -19,6 +19,5 @@ export class AuthModel {
   role: ERole;
 
   @Column()
-  isActive: boolean
+  isActive: boolean;
 }
-

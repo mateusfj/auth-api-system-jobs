@@ -1,25 +1,25 @@
 import { Module } from '@nestjs/common';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AUTH_REPOSITORY_INTERFACE } from 'src/domain/auth/repository/auth.repository.interface';
 
-import { AuthModel } from 'src/infra/auth/repository/auth.model';
-import { AuthRespository } from 'src/infra/auth/repository/auth.repository';
+import { AUTH_REPOSITORY_INTERFACE } from 'src/core/domain/auth/repository/auth.repository.interface';
+
+import { AuthRespository } from 'src/core/infra/auth/repository/typeorm/auth.repository';
+import { CreateAuthUseCase } from 'src/core/usecase/auth/create/create.auth.usecase';
+
+import { AuthModel } from 'src/core/infra/auth/repository/typeorm/auth.model';
 import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
-
-
 
 @Module({
   imports: [TypeOrmModule.forFeature([AuthModel])],
   controllers: [AuthController],
   providers: [
-    AuthService,
     AuthRespository,
+    CreateAuthUseCase,
     {
       provide: AUTH_REPOSITORY_INTERFACE,
-      useClass: AuthRespository
-    }
-  ]
+      useClass: AuthRespository,
+    },
+  ],
 })
-export class AuthModule { }
+export class AuthModule {}

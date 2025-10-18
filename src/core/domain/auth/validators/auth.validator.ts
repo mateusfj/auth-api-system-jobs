@@ -1,10 +1,4 @@
-import {
-  IsBoolean,
-  IsEmail,
-  IsNotEmpty,
-  IsString,
-  IsStrongPassword,
-} from 'class-validator';
+import { IsBoolean, IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { ERole } from 'src/utils/enums/ERole';
 import { ClassValidatorFields } from '../../@shared/validators/class-validator-fields';
 import { Auth, AuthProps } from '../entity/auth.entity';
@@ -18,11 +12,6 @@ class AuthRules {
   @IsNotEmpty()
   email: string;
 
-  @IsStrongPassword({
-    minUppercase: 1,
-    minSymbols: 1,
-    minNumbers: 1,
-  })
   @IsString()
   @IsNotEmpty()
   password: string;

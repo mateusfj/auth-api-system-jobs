@@ -1,30 +1,14 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post
-} from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 
-import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
+import { inputCreateAuthDTO } from 'src/core/usecase/auth/create/create.auth.dto';
+import { CreateAuthUseCase } from 'src/core/usecase/auth/create/create.auth.usecase';
 
 @Controller('auth')
 export class AuthController {
-
-  constructor(private readonly authSevice: AuthService) { }
+  constructor(private readonly createAuthUseCase: CreateAuthUseCase) {}
 
   @Post()
-  create(@Body() createAuthDto: CreateAuthDto) {
-    return this.authSevice.create(createAuthDto);
+  create(@Body() inputCreateAuthDTO: inputCreateAuthDTO) {
+    return this.createAuthUseCase.execute(inputCreateAuthDTO);
   }
-
-  @Get()
-  findAll() {
-    return this.authSevice.findAll()
-  }
-
-  // @Get(":id")
-  // findOne() {
-  //   return this.authSevice.findOne()
-  // }
 }

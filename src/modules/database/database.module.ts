@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModel } from '../../infra/auth/repository/auth.model';
-
+import { AuthModel } from 'src/core/infra/auth/repository/typeorm/auth.model';
 
 @Module({
   imports: [
@@ -20,4 +19,4 @@ import { AuthModel } from '../../infra/auth/repository/auth.model';
     }),
   ],
 })
-export class DatabaseModule { }
+export class DatabaseModule {}
