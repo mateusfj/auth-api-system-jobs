@@ -1,13 +1,13 @@
 import { ERole } from 'src/utils/enums/ERole';
 
-export class inputCreateAuthDTO {
+export interface inputCreateAuthDTO {
   name: string;
   email: string;
   password: string;
   role: ERole;
 }
 
-export class outputCreateAuthDTO {
+export interface outputCreateAuthDTO {
   id: string;
   name: string;
   email: string;

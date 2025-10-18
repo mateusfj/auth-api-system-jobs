@@ -1,17 +1,17 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { AuthFactory } from 'src/core/domain/auth/factory/AuthFactory';
-import type { AuthInterfaceRespository } from 'src/core/domain/auth/repository/auth.repository.interface';
-import { AUTH_REPOSITORY_INTERFACE } from 'src/core/domain/auth/repository/auth.repository.interface';
+import { AuthFactory } from 'src/core/domain/auth/factory/auth.factory';
+import { AuthInterfaceRespository } from 'src/core/domain/auth/repository/auth.repository.interface';
 import { inputCreateAuthDTO, outputCreateAuthDTO } from './create.auth.dto';
 
-@Injectable()
 export class CreateAuthUseCase {
-  constructor(
-    @Inject(AUTH_REPOSITORY_INTERFACE)
-    private readonly authRepository: AuthInterfaceRespository,
-  ) {}
+  constructor(private readonly authRepository: AuthInterfaceRespository) {}
 
   async execute(data: inputCreateAuthDTO): Promise<outputCreateAuthDTO> {
+    const userExists = await this.authRepository.findByEmail(data.email);
+
+    if (userExists) {
+      throw new Error('User already exists with this email');
+    }
+
     const auth = AuthFactory.create({
       _name: data.name,
       _email: data.email,

@@ -37,8 +37,6 @@ function assertContainsErrorMessages(
   // Use Jest's expect API to check if expected contains received
   const pass = expect(expected).toEqual(expect.objectContaining(received));
 
-  console.log({ expected, received, pass });
-
   return pass === undefined
     ? isValid()
     : {

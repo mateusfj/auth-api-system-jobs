@@ -13,6 +13,23 @@ export class AuthRespository implements AuthInterfaceRespository {
     private readonly authRepository: Repository<AuthModel>,
   ) {}
 
+  async findByEmail(email: string): Promise<Auth | null> {
+    const user = await this.authRepository.findOne({ where: { email } });
+
+    if (!user) {
+      return null;
+    }
+
+    return new Auth({
+      _id: user.id,
+      _name: user.name,
+      _email: user.email,
+      _password: user.password,
+      _role: user.role,
+      _isActive: user.isActive,
+    });
+  }
+
   async create(data: Auth): Promise<void> {
     await this.authRepository.save({
       id: data._id,

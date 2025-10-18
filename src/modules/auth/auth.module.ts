@@ -1,25 +1,21 @@
-import { Module } from '@nestjs/common';
+import { Module, Provider } from '@nestjs/common';
 
+import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
-import { AUTH_REPOSITORY_INTERFACE } from 'src/core/domain/auth/repository/auth.repository.interface';
-
-import { AuthRespository } from 'src/core/infra/auth/repository/typeorm/auth.repository';
-import { CreateAuthUseCase } from 'src/core/usecase/auth/create/create.auth.usecase';
-
 import { AuthModel } from 'src/core/infra/auth/repository/typeorm/auth.model';
 import { AuthController } from './auth.controller';
+import { PROVIDERS } from './auth.providers';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([AuthModel])],
-  controllers: [AuthController],
-  providers: [
-    AuthRespository,
-    CreateAuthUseCase,
-    {
-      provide: AUTH_REPOSITORY_INTERFACE,
-      useClass: AuthRespository,
-    },
+  imports: [
+    TypeOrmModule.forFeature([AuthModel]),
+    JwtModule.registerAsync({
+      useFactory: () => ({
+        secret: process.env.JWT_SECRET,
+      }),
+    }),
   ],
+  controllers: [AuthController],
+  providers: PROVIDERS as Provider[],
 })
 export class AuthModule {}
