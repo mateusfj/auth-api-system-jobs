@@ -2,6 +2,7 @@ import {
   ArgumentsHost,
   Catch,
   ExceptionFilter,
+  HttpException,
   HttpStatus,
 } from '@nestjs/common';
 import { Response } from 'express';
@@ -32,6 +33,19 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     if (exception instanceof DomainException) {
       status = exception.statusCode;
       message = exception.message;
+    }
+
+    if (exception instanceof HttpException) {
+      status = exception.getStatus();
+      const responseObj = exception.getResponse();
+
+      if (typeof responseObj === 'object' && responseObj !== null) {
+        const resp = responseObj as any;
+        message = 'Validation failed';
+        details = resp.message || [];
+      } else {
+        message = exception.message;
+      }
     }
 
     const errorResponse = {

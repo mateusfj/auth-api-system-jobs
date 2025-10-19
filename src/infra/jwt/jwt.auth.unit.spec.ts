@@ -1,5 +1,6 @@
 import { JwtService } from '@nestjs/jwt';
-import { IJwtInterface } from '../../../domain/@shared/jwt/jwt.auth.interface';
+
+import { IJwtInterface } from 'src/domain/@shared/jwt/jwt.auth.interface';
 import { JwtAuth } from './jwt.auth';
 
 const jwtService: IJwtInterface = new JwtAuth(new JwtService());

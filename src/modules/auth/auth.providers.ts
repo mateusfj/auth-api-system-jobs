@@ -8,8 +8,9 @@ import {
 } from 'src/domain/auth/repository/auth.repository.interface';
 import { CreateAuthUseCase } from 'src/domain/auth/usecase/create/create.auth.usecase';
 import { LoginAuthUseCase } from 'src/domain/auth/usecase/login/login.auth.usecase';
-import { JwtAuth } from 'src/infra/auth/jwt/jwt.auth';
+
 import { AuthRespository } from 'src/infra/auth/repository/typeorm/auth.repository';
+import { JwtAuth } from 'src/infra/jwt/jwt.auth';
 
 export const PROVIDERS = [
   AuthRespository,

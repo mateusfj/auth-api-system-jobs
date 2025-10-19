@@ -1,10 +1,4 @@
-import {
-  IsBoolean,
-  IsEmail,
-  IsEnum,
-  IsNotEmpty,
-  IsString,
-} from 'class-validator';
+import { IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { ERole } from 'src/utils/enums/ERole';
 import { Notification } from '../../@shared/notification/notification';
 import { ClassValidatorFields } from '../../@shared/validator/class-validator-fields';
@@ -27,15 +21,11 @@ class AuthRules {
   @IsNotEmpty()
   role: ERole;
 
-  @IsBoolean()
-  isActive: boolean;
-
   constructor(props: AuthProps) {
     this.name = props.name;
     this.email = props.email;
     this.password = props.password;
     this.role = props.role;
-    this.isActive = props.isActive;
   }
 }
 

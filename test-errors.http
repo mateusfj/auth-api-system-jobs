@@ -43,7 +43,7 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "joao@example.com",
+  "email":   "",
   "password": "senha_errada"
 }
 
@@ -52,8 +52,8 @@ POST http://localhost:3000/auth
 Content-Type: application/json
 
 {
-  "name": "Mateus Silva",
-  "email": "email@gmail.com",
-  "password": "dawdwadwadwad",
+  "name": "",
+  "email": "emailil.com",
+  "password": "",
   "role": "INVALID_ROLE"
 }

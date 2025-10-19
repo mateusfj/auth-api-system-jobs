@@ -1,8 +1,10 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import type { inputCreateAuthDTO } from 'src/domain/auth/usecase/create/create.auth.dto';
+import { inputCreateAuthDTO } from 'src/domain/auth/usecase/create/create.auth.dto';
 import { CreateAuthUseCase } from 'src/domain/auth/usecase/create/create.auth.usecase';
 import type { inputLoginAuthDTO } from 'src/domain/auth/usecase/login/login.auth.dto';
 import { LoginAuthUseCase } from 'src/domain/auth/usecase/login/login.auth.usecase';
+import { CreateAuthDto } from 'src/infra/auth/dto/class-validator/create.auth.dto';
+import { LoginAuthDTO } from 'src/infra/auth/dto/class-validator/login.auth.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -12,12 +14,22 @@ export class AuthController {
   ) {}
 
   @Post()
-  async create(@Body() inputCreateAuthDTO: inputCreateAuthDTO) {
+  async create(@Body() body: CreateAuthDto) {
+    const inputCreateAuthDTO: inputCreateAuthDTO = {
+      name: body.name,
+      email: body.email,
+      password: body.password,
+      role: body.role,
+    };
     return await this.createAuthUseCase.execute(inputCreateAuthDTO);
   }
 
   @Post('login')
-  async login(@Body() inputLoginAuthDTO: inputLoginAuthDTO) {
+  async login(@Body() body: LoginAuthDTO) {
+    const inputLoginAuthDTO: inputLoginAuthDTO = {
+      email: body.email,
+      password: body.password,
+    };
     return await this.loginAuthUseCase.execute(inputLoginAuthDTO);
   }
 }
