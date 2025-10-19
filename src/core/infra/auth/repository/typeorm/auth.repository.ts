@@ -14,36 +14,32 @@ export class AuthRespository implements AuthInterfaceRespository {
   ) {}
 
   async findByEmail(email: string): Promise<Auth | null> {
-    console.log('Finding user by email:', email);
-
     const user = await this.authRepository.findOne({
       where: { email: email },
     });
-
-    console.log('xxxx', user);
 
     if (!user) {
       return null;
     }
 
     return new Auth({
-      _id: user.id,
-      _name: user.name,
-      _email: user.email,
-      _password: user.password,
-      _role: user.role,
-      _isActive: user.isActive,
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      role: user.role,
+      isActive: user.isActive,
     });
   }
 
   async create(data: Auth): Promise<void> {
     await this.authRepository.save({
       id: data._id,
-      name: data._name,
-      email: data._email,
-      password: data._password,
-      role: data._role,
-      isActive: data._isActive,
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      role: data.role,
+      isActive: data.isActive,
     });
   }
 
@@ -52,12 +48,12 @@ export class AuthRespository implements AuthInterfaceRespository {
     return users.map(
       (user) =>
         new Auth({
-          _id: user.id,
-          _name: user.name,
-          _email: user.email,
-          _password: user.password,
-          _role: user.role,
-          _isActive: user.isActive,
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          password: user.password,
+          role: user.role,
+          isActive: user.isActive,
         }),
     );
   }
@@ -68,12 +64,12 @@ export class AuthRespository implements AuthInterfaceRespository {
       throw new Error('User not found');
     }
     return new Auth({
-      _id: user.id,
-      _name: user.name,
-      _email: user.email,
-      _password: user.password,
-      _role: user.role,
-      _isActive: user.isActive,
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      role: user.role,
+      isActive: user.isActive,
     });
   }
 
@@ -90,20 +86,20 @@ export class AuthRespository implements AuthInterfaceRespository {
     if (!user) {
       throw new Error('User not found');
     }
-    user.name = data._name;
-    user.email = data._email;
-    user.password = data._password;
-    user.role = data._role;
-    user.isActive = data._isActive;
+    user.name = data.name;
+    user.email = data.email;
+    user.password = data.password;
+    user.role = data.role;
+    user.isActive = data.isActive;
 
     await this.authRepository.save(user);
     return new Auth({
-      _id: user.id,
-      _name: user.name,
-      _email: user.email,
-      _password: user.password,
-      _role: user.role,
-      _isActive: user.isActive,
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      role: user.role,
+      isActive: user.isActive,
     });
   }
 }

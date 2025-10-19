@@ -3,6 +3,7 @@ import { IJwtInterface } from '../../../domain/@shared/jwt/jwt.auth.interface';
 import { JwtAuth } from './jwt.auth';
 
 const jwtService: IJwtInterface = new JwtAuth(new JwtService());
+
 const payload = {
   userId: '123',
   email: 'mateus@gmail.com',
@@ -13,13 +14,12 @@ const options = { expiresIn: '1h' };
 
 describe('JWT Auth Service', () => {
   it('should generate and verify JWT tokens', async () => {
-    const token = await jwtService.sign(payload, secret, options);
-
+    const token = await jwtService.sign(payload, options);
     expect(token).toBeDefined();
   });
 
   it('should verify a valid JWT token', async () => {
-    const token = await jwtService.sign(payload, secret, options);
+    const token = await jwtService.sign(payload, options);
     const decoded = jwtService.verify(token, secret);
     expect(decoded).toBeDefined();
     expect(decoded.userId).toBe(payload.userId);

@@ -4,13 +4,13 @@ import { Auth, AuthProps } from '../entity/auth.entity';
 export class AuthFactory {
   static create(entity: AuthProps): Auth {
     const auth = new Auth({
-      _id: uuid(),
-      _name: entity._name,
-      _email: entity._email,
-      _password: entity._password,
-      _role: entity._role,
+      id: uuid(),
+      name: entity.name,
+      email: entity.email,
+      password: entity.password,
+      role: entity.role,
     });
-    Auth.validade(auth);
+    auth.validate(auth);
     return auth;
   }
 }

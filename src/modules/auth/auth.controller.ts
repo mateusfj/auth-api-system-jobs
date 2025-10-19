@@ -10,15 +10,15 @@ export class AuthController {
   constructor(
     private readonly createAuthUseCase: CreateAuthUseCase,
     private readonly loginAuthUseCase: LoginAuthUseCase,
-  ) {}
+  ) { }
 
   @Post()
-  create(@Body() inputCreateAuthDTO: inputCreateAuthDTO) {
-    return this.createAuthUseCase.execute(inputCreateAuthDTO);
+  async create(@Body() inputCreateAuthDTO: inputCreateAuthDTO) {
+    return await this.createAuthUseCase.execute(inputCreateAuthDTO);
   }
 
   @Post('login')
-  login(@Body() inputLoginAuthDTO: inputLoginAuthDTO) {
-    return this.loginAuthUseCase.execute(inputLoginAuthDTO);
+  async login(@Body() inputLoginAuthDTO: inputLoginAuthDTO) {
+    return await this.loginAuthUseCase.execute(inputLoginAuthDTO);
   }
 }

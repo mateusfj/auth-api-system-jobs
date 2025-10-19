@@ -1,48 +1,50 @@
 import { ERole } from 'src/utils/enums/ERole';
-import { EntityValidationError } from '../../@shared/validator/validation.error';
+import { Entity } from '../../@shared/entity/entity.abstract';
+
+import { NotificationError } from '../../@shared/exceptions/domain.exceptions';
 import { AuthValidatorFactory } from '../validator/auth.validator';
 
 export interface AuthProps {
-  _id?: string;
-  _name: string;
-  _email: string;
-  _password: string;
-  _role: ERole;
-  _isActive?: boolean;
+  id?: string;
+  name: string;
+  email: string;
+  password: string;
+  role: ERole;
+  isActive?: boolean;
 }
 
-export class Auth {
-  _id: string;
-  _name: string;
-  _email: string;
-  _password: string;
-  _role: ERole;
-  _isActive: boolean;
+export class Auth extends Entity {
+  name: string;
+  email: string;
+  password: string;
+  role: ERole;
+  isActive: boolean;
 
   constructor(props: AuthProps) {
-    this._id = props._id;
-    this._role = props._role;
-    this._name = props._name;
-    this._password = props._password;
-    this._email = props._email;
-    this._isActive = true;
-  }
+    super();
+    this.id = props.id;
+    this.role = props.role;
+    this.name = props.name;
+    this.password = props.password;
+    this.email = props.email;
+    this.isActive = true;
+    this.validate(this);
 
-  static validade(entity: Auth) {
-    const validator = AuthValidatorFactory.create();
-    const isValid = validator.validate(entity);
-    if (!isValid) {
-      throw new EntityValidationError(
-        validator.errors ?? { invalid: ['Invalid entity'] },
-      );
+    if (this.notification.hasErrors()) {
+      throw new NotificationError(this.notification.getErrors());
     }
   }
 
+  validate(entity: Auth) {
+    const validator = AuthValidatorFactory.create();
+    validator.validate(entity, this.notification);
+  }
+
   activate() {
-    this._isActive = true;
+    this.isActive = true;
   }
 
   deactivate() {
-    this._isActive = false;
+    this.isActive = false;
   }
 }

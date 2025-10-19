@@ -1,3 +1,4 @@
+import { NotFoundDomainException, UnauthorizedDomainException } from 'src/core/domain/@shared/exceptions/domain.exceptions';
 import { IJwtInterface } from 'src/core/domain/@shared/jwt/jwt.auth.interface';
 import { AuthInterfaceRespository } from 'src/core/domain/auth/repository/auth.repository.interface';
 import { inputLoginAuthDTO, outputLoginAuthDTO } from './login.auth.dto';
@@ -6,30 +7,24 @@ export class LoginAuthUseCase {
   constructor(
     private readonly authRepository: AuthInterfaceRespository,
     private readonly jwtService: IJwtInterface,
-  ) {}
+  ) { }
 
   async execute(
     inputLoginAuthDTO: inputLoginAuthDTO,
   ): Promise<outputLoginAuthDTO> {
-    console.log(
-      'LoginAuthUseCase.execute called with:',
-      inputLoginAuthDTO.email,
-    );
     const user = await this.authRepository.findByEmail(inputLoginAuthDTO.email);
 
-    console.log(user);
-
     if (!user) {
-      throw new Error('User not found');
+      throw new NotFoundDomainException('User not found');
     }
 
-    if (user._password !== inputLoginAuthDTO.password) {
-      throw new Error('Invalid credentials');
+    if (user.password !== inputLoginAuthDTO.password) {
+      throw new UnauthorizedDomainException('Invalid credentials');
     }
 
     const payload = {
       userId: user._id,
-      email: user._email,
+      email: user.email,
     };
 
     const tokenGenerator = new GeneterateTokens(this.jwtService);
@@ -44,7 +39,7 @@ export class LoginAuthUseCase {
 }
 
 class GeneterateTokens {
-  constructor(private readonly jwtService: IJwtInterface) {}
+  constructor(private readonly jwtService: IJwtInterface) { }
 
   async generateAccessToken(payload: object): Promise<string> {
     return this.jwtService.sign(
