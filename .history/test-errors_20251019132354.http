@@ -1,0 +1,59 @@
+### Teste de criação de usuário com dados válidos
+POST http://localhost:3000/auth
+Content-Type: application/json
+
+{
+  "name": "João Silva",
+  "email": "joao@example.com",
+  "password": "123456",
+  "role": "USER"
+}
+
+### Teste de criação de usuário duplicado (deve retornar 409 Conflict)
+POST http://localhost:3000/auth
+Content-Type: application/json
+
+{
+  "name": "Maria Santos",
+  "email": "joao@exadwdample.com",
+  "password": "123456",
+  "role": "admin"
+}
+
+### Teste de login com usuário existente (deve retornar 200)
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "joao@example.com",
+  "password": "123456"
+}
+
+### Teste de login com usuário inexistente (deve retornar 404)
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "inexistente@example.com",
+  "password": "123456"
+}
+
+### Teste de login com senha incorreta (deve retornar 401)
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "joao@example.com",
+  "password": "senha_errada"
+}
+
+### Teste de criação com dados inválidos (deve retornar 400)
+POST http://localhost:3000/auth
+Content-Type: application/json
+
+{
+  "name": "",
+  "email": "email-invalido",
+  "password": "",
+  "role": "INVALID_ROLE"
+}
