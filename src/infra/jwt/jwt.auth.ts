@@ -17,13 +17,12 @@ export class JwtAuth implements IJwtInterface {
         ...options,
       },
     );
-
     return token;
   }
 
-  verify(token: string, secret: string): any {
-    return this.jwtService.verify(token, {
-      secret,
+  verify(token: string): any {
+    return this.jwtService.verifyAsync(token, {
+      secret: process.env.JWT_SECRET_KEY,
     });
   }
 }
