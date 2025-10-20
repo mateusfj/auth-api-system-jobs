@@ -2,14 +2,17 @@ import {
   NotFoundDomainException,
   UnauthorizedDomainException,
 } from 'src/domain/@shared/exceptions/domain.exceptions';
-import { IJwtInterface } from 'src/domain/@shared/jwt/jwt.auth.interface';
-import { AuthInterfaceRespository } from '../../repository/auth.repository.interface';
+import { JwtInterface } from 'src/domain/@shared/jwt/jwt.auth.interface';
+import { GenerateTokens } from 'src/domain/@shared/jwt/jwt.generate-tokens';
+import { CacheInterface } from 'src/domain/@shared/repository/cache.interface';
+import { AuthInterfaceRepository } from '../../repository/auth.repository.interface';
 import { inputLoginAuthDTO, outputLoginAuthDTO } from './login.auth.dto';
 
 export class LoginAuthUseCase {
   constructor(
-    private readonly authRepository: AuthInterfaceRespository,
-    private readonly jwtService: IJwtInterface,
+    private readonly authRepository: AuthInterfaceRepository,
+    private readonly jwtService: JwtInterface,
+    private readonly cacheService: CacheInterface,
   ) {}
 
   async execute(
@@ -25,46 +28,16 @@ export class LoginAuthUseCase {
       throw new UnauthorizedDomainException('Invalid credentials');
     }
 
-    const payload = {
-      userId: user.id,
-      email: user.email,
-    };
+    const tokenGenerator = new GenerateTokens(this.jwtService, user);
+    const tokens = await tokenGenerator.generateTokens();
 
-    const tokenGenerator = new GeneterateTokens(this.jwtService);
-    const token = await tokenGenerator.generateAccessToken(payload);
-    const refreshToken = await tokenGenerator.generateRefreshToken(payload);
-
-    return {
-      token,
-      refreshToken,
-    };
-  }
-}
-
-class GeneterateTokens {
-  constructor(private readonly jwtService: IJwtInterface) {}
-
-  async generateAccessToken(payload: object): Promise<string> {
-    return this.jwtService.sign(
-      {
-        ...payload,
-        type: 'access_token',
-      },
-      {
-        expiresIn: process.env.JWT_TOKEN_EXPIRES_IN,
-      },
+    await this.cacheService.set(
+      `refresh_token_${user.id}`,
+      tokens.refreshToken,
     );
-  }
 
-  async generateRefreshToken(payload: object): Promise<string> {
-    return this.jwtService.sign(
-      {
-        ...payload,
-        type: 'refresh_token',
-      },
-      {
-        expiresIn: process.env.JWT_REFRESH_EXPIRES_IN,
-      },
-    );
+    await this.cacheService.get(`refresh_token_${user.id}`);
+
+    return tokens;
   }
 }

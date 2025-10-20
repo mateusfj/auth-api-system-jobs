@@ -3,8 +3,11 @@ import { inputCreateAuthDTO } from 'src/domain/auth/usecase/create/create.auth.d
 import { CreateAuthUseCase } from 'src/domain/auth/usecase/create/create.auth.usecase';
 import type { inputLoginAuthDTO } from 'src/domain/auth/usecase/login/login.auth.dto';
 import { LoginAuthUseCase } from 'src/domain/auth/usecase/login/login.auth.usecase';
-import { RefreshTokenUseCase } from 'src/domain/auth/usecase/refresh-token/refresh-token.auth';
-import { InputRefreshTokenAuthDTO } from 'src/domain/auth/usecase/refresh-token/refresh-token.auth.dto';
+import {
+  InputRefreshTokenAuthDTO,
+  OutputRefreshTokenAuthDTO,
+} from 'src/domain/auth/usecase/refresh-token/refresh-token.auth.dto';
+import { RefreshTokenUseCase } from 'src/domain/auth/usecase/refresh-token/refresh-token.auth.usecase';
 import { CreateAuthDto } from 'src/infra/auth/dto/class-validator/create.auth.dto';
 import { LoginAuthDTO } from 'src/infra/auth/dto/class-validator/login.auth.dto';
 import { RefreshTokenAuthDTO } from 'src/infra/auth/dto/class-validator/refresh-token.auth.dto';
@@ -38,7 +41,9 @@ export class AuthController {
   }
 
   @Post('refresh-token')
-  async refreshToken(@Body() body: RefreshTokenAuthDTO) {
+  async refreshToken(
+    @Body() body: RefreshTokenAuthDTO,
+  ): Promise<OutputRefreshTokenAuthDTO> {
     const input: InputRefreshTokenAuthDTO = { refreshToken: body.refreshToken };
     return await this.refreshTokenUseCase.execute(input);
   }

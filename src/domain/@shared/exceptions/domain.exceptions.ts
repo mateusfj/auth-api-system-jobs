@@ -17,6 +17,12 @@ export class NotFoundDomainException extends DomainException {
   }
 }
 
+export class ValidationDomainException extends DomainException {
+  constructor(message: string, statusCode = 400) {
+    super(message, statusCode);
+  }
+}
+
 export class ConflictDomainException extends DomainException {
   constructor(message: string, statusCode = 409) {
     super(message, statusCode);

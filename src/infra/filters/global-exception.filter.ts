@@ -4,6 +4,7 @@ import {
   ExceptionFilter,
   HttpException,
   HttpStatus,
+  Logger,
 } from '@nestjs/common';
 import { Response } from 'express';
 import {
@@ -13,6 +14,8 @@ import {
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
+  logger = new Logger(GlobalExceptionFilter.name);
+
   catch(exception: unknown, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
@@ -56,6 +59,8 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       message,
       ...(details.length > 0 && { details }),
     };
+
+    this.logger.error(JSON.stringify(errorResponse));
 
     response.status(status).json(errorResponse);
   }

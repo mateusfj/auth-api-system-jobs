@@ -1,10 +1,10 @@
 import { ConflictDomainException } from 'src/domain/@shared/exceptions/domain.exceptions';
 import { AuthFactory } from '../../factory/auth.factory';
-import { AuthInterfaceRespository } from '../../repository/auth.repository.interface';
+import { AuthInterfaceRepository } from '../../repository/auth.repository.interface';
 import { inputCreateAuthDTO, outputCreateAuthDTO } from './create.auth.dto';
 
 export class CreateAuthUseCase {
-  constructor(private readonly authRepository: AuthInterfaceRespository) {}
+  constructor(private readonly authRepository: AuthInterfaceRepository) {}
 
   async execute(data: inputCreateAuthDTO): Promise<outputCreateAuthDTO> {
     const userExists = await this.authRepository.findByEmail(data.email);

@@ -4,6 +4,6 @@ export interface inputLoginAuthDTO {
 }
 
 export interface outputLoginAuthDTO {
-  token: string;
+  accessToken: string;
   refreshToken: string;
 }

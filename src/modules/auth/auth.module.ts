@@ -3,11 +3,13 @@ import { Module, Provider } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModel } from 'src/infra/auth/repository/typeorm/auth.model';
+import { AppCacheModule } from 'src/modules/cache/cache.module';
 import { AuthController } from './auth.controller';
 import { PROVIDERS } from './auth.providers';
 
 @Module({
   imports: [
+    AppCacheModule,
     TypeOrmModule.forFeature([AuthModel]),
     JwtModule.registerAsync({
       useFactory: () => ({
