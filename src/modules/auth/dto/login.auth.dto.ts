@@ -1,5 +1,5 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
-import { inputLoginAuthDTO } from '../../../core/application/auth/usecase/login/login.auth.dto';
+import { inputLoginAuthDTO } from '../../../application/auth/usecase/login/login.auth.dto';
 
 export class LoginAuthDTO implements inputLoginAuthDTO {
   @IsString()
