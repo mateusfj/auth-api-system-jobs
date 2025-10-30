@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcrypt';
 import {
   NotFoundDomainException,
   ValidationDomainException,
@@ -38,7 +39,7 @@ export class ResetPasswordAuthUseCase {
       throw new NotFoundDomainException('User not found');
     }
 
-    user.password = newPassword;
+    user.password = await bcrypt.hash(newPassword, 10);
 
     await this.authRepository.update(user);
 

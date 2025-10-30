@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "name": "Mateus Ferreira",
-  "email": "testa@gmail.com",
+  "email": "tata@gmail.com",
   "role": "user",
   "password": "123456@"
 }
@@ -16,8 +16,8 @@ POST http://localhost:3001/auth/login
 Content-Type: application/json
 
 {
-  "email": "testa@gmail.com",
-  "password": "newpassword@123"
+  "email": "tata@gmail.com",
+  "password": "123456@123"
 }
 
 ###
@@ -37,7 +37,7 @@ POST http://localhost:3001/auth/forgot
 Content-Type: application/json
 
 {
-  "email": "testa@gmail.com"
+  "email": "tata@gmail.com"
 }
 
 
@@ -47,5 +47,5 @@ Content-Type: application/json
 
 {
   "resetToken": "{{ forgot.response.body.resetToken }}",
-  "newPassword": "newpassword@123"
+  "newPassword": "123456@123"
 }

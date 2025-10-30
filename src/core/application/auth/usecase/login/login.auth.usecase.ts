@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcrypt';
 import {
   NotFoundDomainException,
   UnauthorizedDomainException,
@@ -24,7 +25,12 @@ export class LoginAuthUseCase {
       throw new NotFoundDomainException('User not found');
     }
 
-    if (user.password !== inputLoginAuthDTO.password) {
+    const comparedHash = await bcrypt.compare(
+      inputLoginAuthDTO.password,
+      user.password,
+    );
+
+    if (!comparedHash) {
       throw new UnauthorizedDomainException('Invalid credentials');
     }
 
@@ -35,8 +41,6 @@ export class LoginAuthUseCase {
       `refresh_token_${user.id}`,
       tokens.refreshToken,
     );
-
-    await this.cacheService.get(`refresh_token_${user.id}`);
 
     return tokens;
   }

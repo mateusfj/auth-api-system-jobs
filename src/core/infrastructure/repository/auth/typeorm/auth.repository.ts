@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthInterfaceRepository } from 'src/core/domain/auth/repository/auth.repository.interface';
 
+import { NotFoundDomainException } from 'src/core/domain/@shared/exceptions/domain.exceptions';
 import { Auth } from 'src/core/domain/auth/entity/auth.entity';
 import { Repository } from 'typeorm';
 import { AuthModel } from './auth.model';
@@ -61,7 +62,7 @@ export class AuthRespository implements AuthInterfaceRepository {
   async findOne(id: string): Promise<Auth> {
     const user = await this.authRepository.findOne({ where: { id } });
     if (!user) {
-      throw new Error('User not found');
+      throw new NotFoundDomainException('User not found');
     }
     return new Auth({
       id: user.id,
@@ -76,7 +77,7 @@ export class AuthRespository implements AuthInterfaceRepository {
   async delete(id: string): Promise<void> {
     const user = await this.authRepository.findBy({ id });
     if (!user) {
-      throw new Error('User not found');
+      throw new NotFoundDomainException('User not found');
     }
     await this.authRepository.softDelete({ id });
   }
@@ -84,7 +85,7 @@ export class AuthRespository implements AuthInterfaceRepository {
   async update(data: Auth): Promise<Auth> {
     const user = await this.authRepository.findOne({ where: { id: data.id } });
     if (!user) {
-      throw new Error('User not found');
+      throw new NotFoundDomainException('User not found');
     }
     user.name = data.name;
     user.email = data.email;
