@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModel } from 'src/infra/auth/repository/typeorm/auth.model';
+import { AuthModel } from 'src/core/infrastructure/repository/auth/typeorm/auth.model';
 
 @Module({
   imports: [

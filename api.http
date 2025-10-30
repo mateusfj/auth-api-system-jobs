@@ -1,11 +1,23 @@
+### Create User
+POST http://localhost:3001/auth/register
+Content-Type: application/json
+
+{
+  "name": "Mateus Ferreira",
+  "email": "testa@gmail.com",
+  "role": "user",
+  "password": "123456@"
+}
+
+
 ### Login
 # @name login
 POST http://localhost:3001/auth/login
 Content-Type: application/json
 
 {
-  "email": "mateusfj@gmail.com",
-  "password": "123456@"
+  "email": "testa@gmail.com",
+  "password": "newpassword@123"
 }
 
 ###
@@ -16,4 +28,24 @@ Content-Type: application/json
 
 {
   "refreshToken": "{{login.response.body.refreshToken}}"
+}
+
+
+### Forgot Password
+# @name forgot
+POST http://localhost:3001/auth/forgot
+Content-Type: application/json
+
+{
+  "email": "testa@gmail.com"
+}
+
+
+### Reset Password
+POST http://localhost:3001/auth/reset-password
+Content-Type: application/json
+
+{
+  "resetToken": "{{ forgot.response.body.resetToken }}",
+  "newPassword": "newpassword@123"
 }
