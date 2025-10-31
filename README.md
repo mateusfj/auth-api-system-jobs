@@ -18,10 +18,7 @@
 - [⚙️ Instalação e execução](#️-instalação-e-execução)
 - [🔑 Autenticação](#-autenticação)
 - [🐳 Docker](#-docker)
-- [🧪 Testes](#-testes)
 - [🧩 Padrões de projeto](#-padrões-de-projeto)
-- [📜 Licença](#-licença)
-- [👤 Autor](#-autor)
 
 ---
 
