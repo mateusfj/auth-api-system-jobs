@@ -80,7 +80,10 @@ src/
 
 Cada camada tem responsabilidades bem definidas e desacopladas, permitindo evoluções e substituições sem impacto direto nas demais.
 
-⚙️ Instalação e execução
+---
+
+## ⚙️ Instalação e execução
+
 🔧 Pré-requisitos
 
 Node.js 18+
@@ -89,26 +92,28 @@ Docker e Docker Compose
 
 🪜 Passos
 
-# 1️⃣ Clone o repositório
+1️⃣ Clone o repositório
 
 ```bash
 git clone https://github.com/mateusfj/auth-microservice.git
 cd auth-service
 ```
 
-# 2️⃣ Instale as dependências
+2️⃣ Instale as dependências
 
 ```bash
 npm install
 ```
 
-# 3️⃣ Inicie o ambiente de desenvolvimento
+3️⃣ Inicie o ambiente de desenvolvimento
 
 ```bash
 npm run dev
 ```
 
-🔑 Autenticação
+---
+
+## 🔑 Autenticação
 
 O serviço utiliza JWT para autenticação, com:
 
@@ -140,7 +145,9 @@ docker-compose up -d
 docker-compose down
 ```
 
-🧩 Padrões de projeto
+---
+
+## 🧩 Padrões de projeto
 
 Factory Pattern: encapsula a lógica de criação de entidades e objetos complexos.
 
